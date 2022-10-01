@@ -24,14 +24,14 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Time.deltaTime > max_delta_time) {
-            max_delta_time = Time.deltaTime;
-        } else if (Time.deltaTime < min_delta_time) {
-            min_delta_time = Time.deltaTime;
+        if (Time.fixedDeltaTime > max_delta_time) {
+            max_delta_time = Time.fixedDeltaTime;
+        } else if (Time.fixedDeltaTime < min_delta_time) {
+            min_delta_time = Time.fixedDeltaTime;
         }
         
         if (!phys_grounded && !phys_celinged) {
-            phys_velocity.y -= phys_gravity * Time.deltaTime;
+            phys_velocity.y -= phys_gravity * Time.fixedDeltaTime;
         } else if (phys_celinged) {
             phys_velocity.y = 0;
             transform.Translate(0, -0.01f, 0);
@@ -44,9 +44,9 @@ public class Player : MonoBehaviour {
         }
 
         if (phys_grounded && !phys_celinged) {
-            phys_velocity.x = phys_run_power * Input.GetAxis("Horizontal") * Time.deltaTime;
+            phys_velocity.x = phys_run_power * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
         } else {
-            phys_velocity.x = phys_run_power * phys_air_control_factor * Input.GetAxis("Horizontal") * Time.deltaTime;
+            phys_velocity.x = phys_run_power * phys_air_control_factor * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
         }
 
         // rb2d.MovePosition(new Vector2(transform.position.x, transform.position.y) + phys_velocity);
@@ -54,6 +54,6 @@ public class Player : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        
+        transform.Translate(new Vector3(phys_velocity.x, phys_velocity.y));
     }
 }
