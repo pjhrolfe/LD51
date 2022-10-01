@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 public class Player : MonoBehaviour {
     public float phys_gravity;
     public float phys_jump_power = 5f;
+    public float phys_wall_jump_power = 1f;
     public float phys_run_power = 2f;
     public float phys_air_control_factor = 0.25f; // ALWAYS LESS THAN 1!
     public float max_delta_time = Single.MinValue;
@@ -14,7 +15,9 @@ public class Player : MonoBehaviour {
     public Vector2 phys_velocity;
     [FormerlySerializedAs("phys_is_grounded")] public bool phys_grounded;
     [FormerlySerializedAs("phys_hit_ceiling")] public bool phys_celinged;
-    
+    public bool phys_can_wall_jump_left;
+    public bool phys_can_wall_jump_right;
+
     private Rigidbody2D rb2d;
 
     void Start() {
@@ -38,15 +41,21 @@ public class Player : MonoBehaviour {
         } else {
             phys_velocity.y = 0;
         }
-
-        if (Input.GetButton("Jump") && phys_grounded) {
-            phys_velocity.y = phys_jump_power;
-        }
-
+        
         if (phys_grounded && !phys_celinged) {
             phys_velocity.x = phys_run_power * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
         } else {
-            phys_velocity.x = phys_run_power * phys_air_control_factor * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
+            // phys_velocity.x = phys_run_power * phys_air_control_factor * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
+        }
+
+        if (Input.GetButton("Jump") && phys_grounded) {
+            phys_velocity.y = phys_jump_power;
+        } else if (Input.GetButtonDown("Jump") && phys_can_wall_jump_left) {
+            Debug.LogWarning("LeftWallJump here");
+            phys_velocity = new Vector2(0.8f, 1.5f) * phys_wall_jump_power;
+        } else if (Input.GetButtonDown("Jump") && phys_can_wall_jump_right) {
+            Debug.LogWarning("RightWallJump here");
+            phys_velocity = new Vector2(-0.8f, 1.5f) * phys_wall_jump_power;
         }
 
         // rb2d.MovePosition(new Vector2(transform.position.x, transform.position.y) + phys_velocity);
