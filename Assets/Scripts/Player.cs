@@ -59,9 +59,11 @@ public class Player : MonoBehaviour {
         } else if (Input.GetButtonDown("Jump") && phys_can_wall_jump_left && !phys_grounded && Math.Abs(phys_velocity.x) > phys_wall_jump_required_velocity) {
             // Debug.LogWarning("LeftWallJump here");
             phys_velocity = new Vector2(phys_wall_jump_angle.x, phys_wall_jump_angle.y) * phys_wall_jump_power;
+            AudioManager.Instance.Play("Jump");
         } else if (Input.GetButtonDown("Jump") && phys_can_wall_jump_right && !phys_grounded && Math.Abs(phys_velocity.x) > phys_wall_jump_required_velocity) {
             // Debug.LogWarning("RightWallJump here");
             phys_velocity = new Vector2(-phys_wall_jump_angle.x, phys_wall_jump_angle.y) * phys_wall_jump_power;
+            AudioManager.Instance.Play("Jump");
         }
         
         transform.Translate(new Vector3(phys_velocity.x, phys_velocity.y));
