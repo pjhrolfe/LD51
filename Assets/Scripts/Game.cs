@@ -8,6 +8,7 @@ public class Game : MonoBehaviour {
     public Tilemap tilemap;
     public Tile water_tile;
     public int water_level = -4;
+    public int water_level_rise = 3;
     
     void Start()
     {
@@ -21,8 +22,12 @@ public class Game : MonoBehaviour {
         if (ten_second_timer >= 10) {
             // Debug.Log("10 seconds has passed");
             ten_second_timer = 0;
-            FillGaps(water_level);
-            water_level++;
+            for (int i = 0; i < water_level_rise; i++) {
+                FillGaps(water_level);
+                FillGaps(water_level + i);
+            }
+            water_level += water_level_rise;
+            water_level_rise++;
         }
      }
 
