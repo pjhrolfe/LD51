@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     public float phys_jump_power = 0.03f;
     public float phys_wall_jump_power = 0.0125f;
     public float phys_run_power = 1.8f;
+    public float phys_run_slowdown_factor = 0.99f;
     public float phys_air_control_factor = 0.01f; // ALWAYS LESS THAN 1!
     public float max_delta_time = Single.MinValue;
     public float min_delta_time = Single.MaxValue;
@@ -43,8 +44,10 @@ public class Player : MonoBehaviour {
             phys_velocity.y = phys_velocity.y * 0.2f;
         }
         
-        if (phys_grounded && !phys_celinged) {
+        if (phys_grounded && !phys_celinged && Math.Abs(Input.GetAxis("Horizontal")) > 0.25) {
             phys_velocity.x = phys_run_power * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
+        } else if (phys_grounded && !phys_celinged) {
+            phys_velocity.x *= phys_run_slowdown_factor;
         } else { 
             // phys_velocity.x = phys_run_power * phys_air_control_factor * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
         }
