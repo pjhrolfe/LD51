@@ -9,6 +9,7 @@ public class GroundedChecker : MonoBehaviour {
     public void OnTriggerEnter2D(Collider2D col) {
         if (!col.CompareTag("Player")) {
             player.phys_grounded = true;
+            AudioManager.Instance.Play("Hit");
         }
     }
 

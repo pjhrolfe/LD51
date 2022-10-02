@@ -6209,7 +6209,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5442075227919904565, guid: 4751d72a70ec04143909eb5b6feb38fe, type: 3}
       propertyPath: m_Size.x
-      value: 0.1
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 5442075227919904565, guid: 4751d72a70ec04143909eb5b6feb38fe, type: 3}
       propertyPath: m_Size.y
@@ -6297,7 +6297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5442075228702241946, guid: 4751d72a70ec04143909eb5b6feb38fe, type: 3}
       propertyPath: phys_wall_jump_angle.x
-      value: 0.5
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 5442075228702241946, guid: 4751d72a70ec04143909eb5b6feb38fe, type: 3}
       propertyPath: phys_wall_jump_angle.y
@@ -6305,7 +6305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5442075228702241946, guid: 4751d72a70ec04143909eb5b6feb38fe, type: 3}
       propertyPath: phys_air_control_factor
-      value: 0.01
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5442075228702241946, guid: 4751d72a70ec04143909eb5b6feb38fe, type: 3}
       propertyPath: phys_run_slowdown_factor
@@ -6595,7 +6595,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972049119}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -6640,7 +6640,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972049119}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -6710,6 +6710,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2025854686}
   - component: {fileID: 2025854685}
+  - component: {fileID: 2025854687}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -6749,3 +6750,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2025854687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025854684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a051bc386924feca6fb0dfc3cab884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 0}
+  sounds:
+  - name: Hit
+    clip: {fileID: 8300000, guid: b97abfc3426d1496f8411e7ffa0b3537, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: Jump
+    clip: {fileID: 8300000, guid: d7c52a35808084bd891b8642f83a5dae, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}

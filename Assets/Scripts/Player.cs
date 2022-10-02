@@ -49,12 +49,13 @@ public class Player : MonoBehaviour {
             phys_velocity.x = phys_run_power * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
         } else if (phys_grounded && !phys_celinged && Math.Abs(phys_velocity.x) > 0.00000001) {
             phys_velocity.x *= phys_run_slowdown_factor;
-        } else { 
-            // phys_velocity.x = phys_run_power * phys_air_control_factor * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
+        } else if (Math.Abs(Input.GetAxis("Horizontal")) > 0.25){ 
+            phys_velocity.x = phys_run_power * phys_air_control_factor * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
         }
 
         if (Input.GetButton("Jump") && phys_grounded) {
             phys_velocity.y = phys_jump_power;
+            AudioManager.Instance.Play("Jump");
         } else if (Input.GetButtonDown("Jump") && phys_can_wall_jump_left && !phys_grounded && Math.Abs(phys_velocity.x) > phys_wall_jump_required_velocity) {
             // Debug.LogWarning("LeftWallJump here");
             phys_velocity = new Vector2(phys_wall_jump_angle.x, phys_wall_jump_angle.y) * phys_wall_jump_power;
