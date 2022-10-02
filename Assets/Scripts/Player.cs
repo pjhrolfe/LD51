@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     public float phys_gravity = 0.02f;
     public float phys_jump_power = 0.03f;
     public float phys_wall_jump_power = 0.0125f;
+    public float phys_wall_jump_required_velocity = 0.01f;
     public float phys_run_power = 1.8f;
     public float phys_run_slowdown_factor = 0.99f;
     public float phys_air_control_factor = 0.01f; // ALWAYS LESS THAN 1!
@@ -46,7 +47,7 @@ public class Player : MonoBehaviour {
         
         if (phys_grounded && !phys_celinged && Math.Abs(Input.GetAxis("Horizontal")) > 0.25) {
             phys_velocity.x = phys_run_power * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
-        } else if (phys_grounded && !phys_celinged) {
+        } else if (phys_grounded && !phys_celinged && Math.Abs(phys_velocity.x) > 0.00000001) {
             phys_velocity.x *= phys_run_slowdown_factor;
         } else { 
             // phys_velocity.x = phys_run_power * phys_air_control_factor * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
@@ -54,15 +55,14 @@ public class Player : MonoBehaviour {
 
         if (Input.GetButton("Jump") && phys_grounded) {
             phys_velocity.y = phys_jump_power;
-        } else if (Input.GetButtonDown("Jump") && phys_can_wall_jump_left) {
-            Debug.LogWarning("LeftWallJump here");
+        } else if (Input.GetButtonDown("Jump") && phys_can_wall_jump_left && !phys_grounded && Math.Abs(phys_velocity.x) > phys_wall_jump_required_velocity) {
+            // Debug.LogWarning("LeftWallJump here");
             phys_velocity = new Vector2(phys_wall_jump_angle.x, phys_wall_jump_angle.y) * phys_wall_jump_power;
-        } else if (Input.GetButtonDown("Jump") && phys_can_wall_jump_right) {
-            Debug.LogWarning("RightWallJump here");
+        } else if (Input.GetButtonDown("Jump") && phys_can_wall_jump_right && !phys_grounded && Math.Abs(phys_velocity.x) > phys_wall_jump_required_velocity) {
+            // Debug.LogWarning("RightWallJump here");
             phys_velocity = new Vector2(-phys_wall_jump_angle.x, phys_wall_jump_angle.y) * phys_wall_jump_power;
         }
-
-        // rb2d.MovePosition(new Vector2(transform.position.x, transform.position.y) + phys_velocity);
+        
         transform.Translate(new Vector3(phys_velocity.x, phys_velocity.y));
     }
 
